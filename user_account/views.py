@@ -2,13 +2,13 @@ from django.urls import reverse_lazy
 from django.views.generic import FormView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic.edit import UpdateView
-from .forms import UserCreationForm
+from .forms import CreateUserForm
 from .models import User
 
 
 class UserCreateView(FormView):
     template_name = 'user_account/registration/signup.html'
-    form_class = UserCreationForm
+    form_class = CreateUserForm
     success_url = reverse_lazy('login')
 
     def form_valid(self, form):

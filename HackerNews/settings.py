@@ -107,7 +107,7 @@ ROOT_URLCONF = 'HackerNews.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / "templates"], # for templates
+        'DIRS': [BASE_DIR / "templates"], # for templates. templates/registration for django_auth and templates/account for allauth
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -208,3 +208,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = "user_account.User"
 
 SITE_ID = 1
+
+ACCOUNT_SESSION_REMEMBER = True # allauth setting

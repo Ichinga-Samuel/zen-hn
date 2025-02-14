@@ -21,5 +21,6 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include("api.urls")),
     path("", include("home.urls")),
-    path("account/", include("user_account.urls"))
+    path("user/", include("django.contrib.auth.urls")), # authentication urls for in built auth app
+    path("accounts/", include("allauth.urls")) # allauth urls
 ]
