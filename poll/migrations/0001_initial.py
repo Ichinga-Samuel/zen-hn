@@ -16,27 +16,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Story',
-            fields=[
-                ('item_id', models.BigIntegerField(primary_key=True, serialize=False)),
-                ('time', models.DateTimeField(default=django.utils.timezone.now)),
-                ('last_update', models.DateTimeField(auto_now=True)),
-                ('deleted', models.BooleanField(blank=True, default=False)),
-                ('dead', models.BooleanField(blank=True, default=False)),
-                ('type', models.CharField(choices=[('job', 'Job'), ('story', 'Story'), ('comment', 'Comment'), ('poll', 'Poll'), ('pollopt', 'Pollopt')], max_length=10)),
-                ('score', models.IntegerField(blank=True, default=0)),
-                ('descendants', models.IntegerField(blank=True, default=0)),
-                ('title', models.CharField(max_length=255)),
-                ('url', models.URLField(blank=True, default='https://news.ycombinator.com/')),
-                ('text', models.TextField(blank=True, default='')),
-                ('by', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='stories', to=settings.AUTH_USER_MODEL)),
-            ],
-            options={
-                'db_table': 'story',
-            },
-        ),
-        migrations.CreateModel(
-            name='Comment',
+            name='Poll',
             fields=[
                 ('item_id', models.BigIntegerField(primary_key=True, serialize=False)),
                 ('time', models.DateTimeField(default=django.utils.timezone.now)),
@@ -47,12 +27,32 @@ class Migration(migrations.Migration):
                 ('text', models.TextField(default='')),
                 ('score', models.IntegerField(blank=True, default=0)),
                 ('descendants', models.IntegerField(blank=True, default=0)),
-                ('by', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='comments', to=settings.AUTH_USER_MODEL)),
-                ('reply', models.ManyToManyField(blank=True, related_name='replies', to='story.comment')),
-                ('story', models.ForeignKey(default=None, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='comments', to='story.story')),
+                ('title', models.CharField(max_length=255)),
+                ('by', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='polls', to=settings.AUTH_USER_MODEL)),
             ],
             options={
-                'db_table': 'comment',
+                'ordering': ('-time', '-score'),
+                'abstract': False,
+            },
+        ),
+        migrations.CreateModel(
+            name='PollOption',
+            fields=[
+                ('item_id', models.BigIntegerField(primary_key=True, serialize=False)),
+                ('time', models.DateTimeField(default=django.utils.timezone.now)),
+                ('last_update', models.DateTimeField(auto_now=True)),
+                ('deleted', models.BooleanField(blank=True, default=False)),
+                ('dead', models.BooleanField(blank=True, default=False)),
+                ('type', models.CharField(choices=[('job', 'Job'), ('story', 'Story'), ('comment', 'Comment'), ('poll', 'Poll'), ('pollopt', 'Pollopt')], max_length=10)),
+                ('text', models.TextField(default='')),
+                ('score', models.IntegerField(blank=True, default=0)),
+                ('descendants', models.IntegerField(blank=True, default=0)),
+                ('by', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='options', to=settings.AUTH_USER_MODEL)),
+                ('poll', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='options', to='poll.poll')),
+            ],
+            options={
+                'ordering': ('-time', '-score'),
+                'abstract': False,
             },
         ),
     ]

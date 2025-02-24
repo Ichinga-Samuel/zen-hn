@@ -28,6 +28,9 @@ class Item(models.Model):
     descendants = models.IntegerField(default=0, blank=True)
 
     class Meta:
+        # permissions = [
+        #     ("special_status", "Can read all books"),
+        # ]
         abstract = True
         ordering = ('-time', '-score')
 

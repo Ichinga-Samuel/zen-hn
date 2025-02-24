@@ -9,6 +9,12 @@ class Story(Item):
     url = models.URLField(blank=True, default="https://news.ycombinator.com/")
     text = models.TextField(blank=True, default="")
 
+    class Meta:
+        permissions = [
+            ("can_read", "can read a story"),
+            ("can_edit", "can edit a story"),
+        ]
+
     def __str__(self):
         return self.title
 

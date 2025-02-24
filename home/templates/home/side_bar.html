@@ -20,10 +20,21 @@
   <!-- Search Widget -->
   <div class="search-widget widget-item">
     <h3 class="widget-title">Search</h3>
-    <form action="">
-      <input type="text">
+    <form action="{{ url }}" method="get">
+      <input type="text" placeholder="" value="{{query|default:''}}" name="query">
       <button type="submit" title="Search"><i class="bi bi-search"></i></button>
     </form>
+    {% if query|default:None %}
+      {% for post in search_result %}
+        <div class="post-item">
+          <img src="{% static blog_recent %}" alt="" class="flex-shrink-0">
+          <div>
+            <h4><a href="{{post.get_absolute_url}}">{{post.title}}</a></h4>
+            <time datetime="2020-01-01">{{post.time}}</time>
+          </div>
+        </div>
+      {% endfor %}
+    {% endif %}
   </div><!--/Search Widget -->
 
   <!-- Recent Posts Widget -->

@@ -1,5 +1,6 @@
 from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 
 from job.models import Job
 from ..serializers import JobSerializer

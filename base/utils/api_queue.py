@@ -70,7 +70,7 @@ class APIQueue:
             random.shuffle(stories)
             [self.task_queue.add(item=QueueItem(self.get_by_id, item_id=itd)) for itd in stories]
             self.task_queue.workers = len(stories)
-            await self.task_queue.run(timeout=timeout)
+            await self.task_queue.run(queue_timeout=timeout)
         except Exception as err:
             logger.error("%s: Error in traversing API", err)
 
@@ -82,7 +82,7 @@ class APIQueue:
             [self.task_queue.add(item=QueueItem(self.get_user, user_id=profile)) for profile in profiles]
             [self.task_queue.add(item=QueueItem(self.get_by_id, item_id=item)) for item in items]
             self.task_queue.workers = len(items) + len(profiles)
-            await self.task_queue.run(timeout=timeout)
+            await self.task_queue.run(queue_timeout=timeout)
         except Exception as err:
             logger.error("%s: Error in updating", err)
 
@@ -93,4 +93,4 @@ class APIQueue:
         for item in range(largest, largest - amount, -1):
             self.task_queue.add(item=QueueItem(self.get_by_id, item_id=item), priority=0) if item not in self.visited else ...
         self.task_queue.workers = amount
-        await self.task_queue.run(timeout=timeout)
+        await self.task_queue.run(queue_timeout=timeout)

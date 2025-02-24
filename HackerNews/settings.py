@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+from telnetlib import LOGOUT
 
 import environ
 
@@ -183,10 +184,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-# Email Backend
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend" # add for email verification with django-allauth
-
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
@@ -209,4 +206,22 @@ AUTH_USER_MODEL = "user_account.User"
 
 SITE_ID = 1
 
-ACCOUNT_SESSION_REMEMBER = True # allauth setting
+ACCOUNT_SESSION_REMEMBER = True # allauth setting to remember user session
+ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False # allauth setting to enter password twice during signup
+
+LOGIN_REDIRECT_URL = "home" # contrib.auth setting for redirect after login same as next_page in login view works for django-allauth
+LOGOUT_REDIRECT_URL = "home" # contrib.auth setting for redirect after logout same as next_page in logout view works for django-allauth
+
+# these settings are for django-allauth to use email instead of username
+ACCOUNT_USERNAME_REQUIRED = False # new
+ACCOUNT_AUTHENTICATION_METHOD = "email" # new
+ACCOUNT_EMAIL_REQUIRED = True # new
+ACCOUNT_UNIQUE_EMAIL = True # new
+
+# Email Backend
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend" # add for email verification with django-allauth
+# DEFAULT_FROM_EMAIL = "admin@djangobookstore.com"
+
+# media uploaded files
+MEDIA_URL = "/media/" # is the URL we can use in our templates for the files
+MEDIA_ROOT = BASE_DIR / "media" # is the absolute file system path to the directory for user-uploaded files

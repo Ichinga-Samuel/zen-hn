@@ -8,7 +8,7 @@ https://docs.djangoproject.com/en/5.0/topics/auth/customizing/#using-a-custom-us
 import random
 
 from django.db import models
-from django.contrib.auth.models import  AbstractBaseUser, BaseUserManager, PermissionsMixin, AbstractUser
+from django.contrib.auth.models import  AbstractBaseUser, BaseUserManager, PermissionsMixin, AbstractUser, User
 from django.utils.timezone import now
 
 
@@ -43,7 +43,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     about = models.TextField(default="", blank=True)
     verified = models.BooleanField(default=False)
     last_login = models.DateTimeField(blank=True, null=True, default=now)
-    #image = models.ImageField(upload_to="images/", blank=True, null=True)
+    profile_picture = models.ImageField(upload_to="images/", blank=True, null=True) # pip install pillow
     is_active = models.BooleanField(default=True)  # needed to work with Django's authentication system and admin
     is_staff = models.BooleanField(default=False) # needed to work with Django's authentication system and admin
     USERNAME_FIELD = "email"

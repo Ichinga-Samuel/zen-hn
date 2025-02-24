@@ -14,6 +14,8 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
@@ -21,6 +23,17 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include("api.urls")),
     path("", include("home.urls")),
-    path("user/", include("django.contrib.auth.urls")), # authentication urls for in built auth app
+    path("users/", include("user_account.urls")),
     path("accounts/", include("allauth.urls")) # allauth urls
 ]
+
+# Serving media files in development
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# django-allauth provides a set of URLs for authentication, registration, password reset, etc.
+# /accounts/login/ - Login
+# /accounts/logout/ - Logout
+# /accounts/signup/ - Signup
+# /accounts/password/change/ - Password change
+# /accounts/password/reset/ - Password reset
+# /accounts/password/reset/done/ - Password reset done
