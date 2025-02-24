@@ -17,5 +17,8 @@ class Job(Item):
     def get_absolute_url(self):
         return reverse('job-detail', kwargs={'pk': self.pk})
 
-    class Meta:
-        db_table = 'job'
+    class Meta(Item.Meta):
+        permissions = [
+            ("can_edit", "can edit job posting"),
+        ]
+        db_table = 'jobs'

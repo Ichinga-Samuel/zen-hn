@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
-from telnetlib import LOGOUT
 
 import environ
 
@@ -214,7 +213,8 @@ LOGOUT_REDIRECT_URL = "home" # contrib.auth setting for redirect after logout sa
 
 # these settings are for django-allauth to use email instead of username
 ACCOUNT_USERNAME_REQUIRED = False # new
-ACCOUNT_AUTHENTICATION_METHOD = "email" # new
+ACCOUNT_LOGIN_METHODS = {'email'}
+# ACCOUNT_AUTHENTICATION_METHOD = "email" # new deprecated
 ACCOUNT_EMAIL_REQUIRED = True # new
 ACCOUNT_UNIQUE_EMAIL = True # new
 

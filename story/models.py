@@ -9,17 +9,14 @@ class Story(Item):
     url = models.URLField(blank=True, default="https://news.ycombinator.com/")
     text = models.TextField(blank=True, default="")
 
-    class Meta:
+    class Meta(Item.Meta):
         permissions = [
-            ("can_read", "can read a story"),
             ("can_edit", "can edit a story"),
         ]
+        db_table = 'stories'
 
     def __str__(self):
         return self.title
-
-    class Meta:
-        db_table = 'story'
 
 
 class Comment(Item):
@@ -30,5 +27,8 @@ class Comment(Item):
     def __str__(self):
         return f"by_{self.by.username}"
 
-    class Meta:
-        db_table = 'comment'
+    class Meta(Item.Meta):
+        permissions = [
+            ("can_edit", "can edit a comment"),
+        ]
+        db_table = 'comments'
