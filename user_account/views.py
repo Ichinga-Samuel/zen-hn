@@ -7,6 +7,7 @@ from .forms import CreateUserForm
 from .models import User
 from base.scripts.get_images import pick_random_image
 from base.utils import BreadCrumb
+from allauth.account.views import PasswordChangeView, PasswordSetView, PasswordResetView, PasswordResetFromKeyView
 
 
 class LogoutView(_LogoutView):

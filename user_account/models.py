@@ -35,8 +35,8 @@ class UserManager(BaseUserManager):
 # Simple customizations can be made by Subclassing AbstractUser Instead
 # But for more complex customizations, Subclassing AbstractBaseUser and PermissionsMixin is recommended
 class User(AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField(default=make_random_email, primary_key=True)
-    username = models.CharField(max_length=255, unique=True)
+    email = models.EmailField(default=make_random_email)
+    username = models.CharField(max_length=255, unique=True, primary_key=True)
     avatar = models.URLField(default="https://www.gravatar.com/avatar/", blank=True)
     created = models.DateTimeField(default=now)
     karma = models.IntegerField(default=0, blank=True)
