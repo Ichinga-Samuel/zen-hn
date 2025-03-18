@@ -87,5 +87,4 @@ local_settings.py
 .venv/
 .idea/
 
-.env
 db.sqlite3

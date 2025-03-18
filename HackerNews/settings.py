@@ -128,7 +128,7 @@ WSGI_APPLICATION = 'HackerNews.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASE_ENGINES = {
-    'sqlite3': {'ENGINE': 'django.db.backends.sqlite3', 'NAME': BASE_DIR / 'db.sqlite3',},
+    "sqlite3": {"ENGINE": "django.db.backends.sqlite3", "NAME": BASE_DIR / env("SQLITE3_DB_NAME")},
     "postgresql":{
         "ENGINE": "django.db.backends.postgresql",
         "NAME": env("POSTGRES_DB_NAME"),
@@ -138,7 +138,6 @@ DATABASE_ENGINES = {
         "PORT": env("POSTGRES_DB_PORT"),
     }
 }
-
 
 DATABASES = {
     'default': DATABASE_ENGINES[env('CURRENT_DATABASE_ENGINE')],

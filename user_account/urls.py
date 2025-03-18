@@ -6,13 +6,13 @@ from django.contrib.auth.views import (PasswordChangeView, PasswordResetView, Pa
 
 from base.utils import BreadCrumb
 from .views import UserCreateView, UserDetailView, UserUpdateView, LogoutView
-
+from allauth.account.views import PasswordResetFromKeyDoneView
 # app_name = 'user_account'
 home_crumb = BreadCrumb(name="Home", url=reverse_lazy("home"))
 pcd_context = {"breadcrumbs": [home_crumb], "title": "Password Change"}
 prd_context = {"breadcrumbs": [home_crumb], "title": "Password Reset Done"}
 prc_context = {"breadcrumbs": [home_crumb], "title": "Password Reset Complete"}
-domain = "localhost:8000" if (current_domain := Site.objects.get_current().domain) == "example.com" else current_domain
+# domain = "localhost:8000" if (current_domain := Site.objects.get_current().domain) == "example.com" else current_domain
 extra_email_context = {"domain": 'domain'}
 
 # some of the urls are overridden to provide custom context and redirection urls since the default ones are not
