@@ -8,7 +8,7 @@ https://docs.djangoproject.com/en/5.0/topics/auth/customizing/#using-a-custom-us
 import random
 
 from django.db import models
-from django.contrib.auth.models import  AbstractBaseUser, BaseUserManager, PermissionsMixin, AbstractUser, User
+from django.contrib.auth.models import  AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.utils.timezone import now
 
 
@@ -35,8 +35,9 @@ class UserManager(BaseUserManager):
 # Simple customizations can be made by Subclassing AbstractUser Instead
 # But for more complex customizations, Subclassing AbstractBaseUser and PermissionsMixin is recommended
 class User(AbstractBaseUser, PermissionsMixin):
-    email = models.EmailField(default=make_random_email, primary_key=True)
-    username = models.CharField(max_length=255, unique=True)
+    # email not suitable for primary key when using allauth
+    email = models.EmailField(default=make_random_email, unique=True)
+    username = models.CharField(max_length=255, unique=True, primary_key=True)
     avatar = models.URLField(default="https://www.gravatar.com/avatar/", blank=True)
     created = models.DateTimeField(default=now)
     karma = models.IntegerField(default=0, blank=True)

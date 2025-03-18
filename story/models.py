@@ -5,7 +5,7 @@ from base.models import Item
 
 class Story(Item):
     by = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='stories')
-    title = models.CharField(max_length=255)
+    title = models.TextField()
     url = models.URLField(blank=True, default="https://news.ycombinator.com/")
     text = models.TextField(blank=True, default="")
 

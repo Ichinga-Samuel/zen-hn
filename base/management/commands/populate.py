@@ -9,7 +9,7 @@ class Command(BaseCommand):
     help = "Populate the database with some data"
 
     def add_arguments(self, parser):
-        parser.add_argument('--timeout', type=int, default=120)
+        parser.add_argument('--timeout', type=int, default=600)
 
     def handle(self, *args, **options):
         timeout = options['timeout']

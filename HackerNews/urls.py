@@ -24,7 +24,8 @@ urlpatterns = [
     path("api/", include("api.urls")),
     path("", include("home.urls")),
     path("users/", include("user_account.urls")),
-    path("accounts/", include("allauth.urls")) # allauth urls
+    path("accounts/", include("allauth.urls"))
+    # path# allauth urls
 ]
 
 # Serving media files in development
