@@ -13,7 +13,7 @@ pcd_context = {"breadcrumbs": [home_crumb], "title": "Password Change"}
 prd_context = {"breadcrumbs": [home_crumb], "title": "Password Reset Done"}
 prc_context = {"breadcrumbs": [home_crumb], "title": "Password Reset Complete"}
 domain = "localhost:8000" if (current_domain := Site.objects.get_current().domain) == "example.com" else current_domain
-extra_email_context = {"domain": domain}
+extra_email_context = {"domain": 'domain'}
 
 # some of the urls are overridden to provide custom context and redirection urls since the default ones are not
 # where they should be, this is because we are using /users/ instead of /accounts/ for the urls

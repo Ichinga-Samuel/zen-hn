@@ -9,7 +9,7 @@ class Job(Item):
     by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='jobs')
     url = models.URLField(blank=True, default="https://news.ycombinator.com/")
     text = models.TextField(blank=True, default="")
-    title = models.CharField(max_length=255)
+    title = models.TextField()
 
     def __str__(self):
         return self.title

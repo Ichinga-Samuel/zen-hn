@@ -7,7 +7,7 @@ from base.models import Item
 
 class Poll(Item):
     by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='polls')
-    title = models.CharField(max_length=255)
+    title = models.TextField()
 
 
 class PollOption(Item):

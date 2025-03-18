@@ -9,8 +9,8 @@ class Command(BaseCommand):
     help = "Walk through the API and save data to the database"
 
     def add_arguments(self, parser):
-        parser.add_argument('--timeout', type=int, default=300)
-        parser.add_argument('--amount', type=int, default=5000)
+        parser.add_argument('--timeout', type=int, default=600)
+        parser.add_argument('--amount', type=int, default=6000)
 
     def handle(self, *args, **options):
         timeout = options['timeout']
