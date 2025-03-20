@@ -10,11 +10,30 @@ class MyUserAdmin(UserAdmin):
     form = UpdateUserForm
     model = User
     list_display = ['email', 'username', 'avatar', 'created', 'karma', 'about', 'verified']
-    fieldsets = [
-        (None, {"fields": ["email", 'username', 'verified', "password"]}),
-        ("Personal info", {"fields": ["about"]}),
-        ("Permissions", {"fields": ["is_active", "is_staff", "is_superuser"]})
-    ]
+    fieldsets = (
+        (None, {"fields": ("password",)}),
+        ("Personal info", {"fields": ("username", "email", "karma", "about")}),
+        (
+            "Permissions",
+            {
+                "fields": (
+                    "is_active",
+                    "is_staff",
+                    "is_superuser",
+                    "groups",
+                    "user_permissions",
+                ),
+            },
+        ),
+        ("Important dates", {"fields": ("last_login", "created")}),
+    )
+    # fieldsets = UserAdmin.fieldsets
+    # exclude = ["last_name", "first_name", "date_joined"]
+    # fieldsets = [
+    #     (None, {"fields": ["email", 'username', 'verified', "password"]}),
+    #     ("Personal info", {"fields": ["about"]}),
+    #     ("Permissions", {"fields": ['user_permissions']})
+    # ]
     add_fieldsets = [
         (
             None,
@@ -26,7 +45,10 @@ class MyUserAdmin(UserAdmin):
     ]
     search_fields = ["email", 'username']
     ordering = ["created"]
-    filter_horizontal = []
+    filter_horizontal = (
+        "groups",
+        "user_permissions",
+    )
 
 
 admin.site.register(User, MyUserAdmin)

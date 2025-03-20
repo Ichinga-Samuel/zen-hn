@@ -1,6 +1,7 @@
 from itertools import chain
 from django.db.models import Q, Prefetch, Count, FilteredRelation
 from django.views.generic import TemplateView, DetailView, ListView
+from django.urls import reverse_lazy
 
 from story.models import Story
 from job.models import Job
@@ -64,8 +65,16 @@ class BaseListView(ListView):
     queryset_filter = Q()
     user_related_name = 'stories'
     ordering = ('-score',)
+    url = reverse_lazy('stories')
+
+    def post(self, request, *args, **kwargs):
+        # a way to handle post request in view
+        return self.get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
+        # access the GET
+        query = self.request.GET.get("query")
+        print(query, self.url)
         context = super().get_context_data(**kwargs)
         context['category'] = self.category
         page = context['page_obj']
@@ -76,6 +85,13 @@ class BaseListView(ListView):
         queryset = self.get_queryset()
         context['recent'] = queryset.order_by('-last_update', '-time')[:5]
         context['star_user'] = self.set_star_user()
+        context['url'] = self.url
+        if query:
+            print(query, 'query')
+            queryset = self.get_queryset()
+            search_result = queryset.filter(Q(title__icontains=query) | Q(text__icontains=query))[:5]
+            context["query"] = query
+            context["search_result"] = search_result
         return context
 
     def set_star_user(self):
@@ -94,20 +110,24 @@ class AskStoriesView(BaseListView):
     category = 'Ask HN'
     queryset_filter = Q(stories__title__startswith='Ask HN')
     queryset = Story.objects.filter(title__startswith='Ask HN')
+    url = reverse_lazy('ask-stories')
 
 
 class ShowStoriesView(BaseListView):
     category = 'Show HN'
     queryset_filter = Q(stories__title__startswith='Show HN')
     queryset = Story.objects.filter(title__startswith='Show HN')
+    url = reverse_lazy('show-stories')
 
 
 class JobsView(BaseListView):
     category = 'Jobs'
     user_related_name = 'jobs'
     queryset = Job.objects.all()
+    url = reverse_lazy('jobs')
 
 
 class StoriesView(BaseListView):
     queryset = Story.objects.filter(~Q(title__startswith='Show HN') & ~Q(title__startswith='Ask HN'))
     queryset_filter = ~Q(stories__title__startswith='Show HN') & ~Q(stories__title__startswith='Ask HN')
+    url = reverse_lazy('stories')

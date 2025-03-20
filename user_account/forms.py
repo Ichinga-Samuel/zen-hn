@@ -7,9 +7,11 @@ class CreateUserForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = User
         fields = ("email", "username", "password1", "password2", "about", "avatar")
+        exclude = ["last_name", "first_name", "date_joined"]
 
 
 class UpdateUserForm(UserChangeForm):
     class Meta(UserChangeForm.Meta):
         model = User
-        fields = ("username", "about", "avatar")
+        fields = ("username", "about", "avatar", "profile_picture")
+        exclude = ["last_name", "first_name", "date_joined"]

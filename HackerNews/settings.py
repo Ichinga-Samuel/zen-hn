@@ -53,6 +53,8 @@ INSTALLED_APPS = [
     "allauth.account",
     "allauth.socialaccount",
     "dj_rest_auth.registration",
+    "crispy_forms",
+    "crispy_bootstrap5",
     "drf_spectacular", # add for OpenAPI schema
 
     # local apps
@@ -105,7 +107,7 @@ ROOT_URLCONF = 'HackerNews.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / "templates"], # for templates
+        'DIRS': [BASE_DIR / "templates"], # for templates. templates/registration for django_auth and templates/account for allauth
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -126,7 +128,7 @@ WSGI_APPLICATION = 'HackerNews.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASE_ENGINES = {
-    'sqlite3': {'ENGINE': 'django.db.backends.sqlite3', 'NAME': BASE_DIR / 'db.sqlite3',},
+    "sqlite3": {"ENGINE": "django.db.backends.sqlite3", "NAME": BASE_DIR / env("SQLITE3_DB_NAME")},
     "postgresql":{
         "ENGINE": "django.db.backends.postgresql",
         "NAME": env("POSTGRES_DB_NAME"),
@@ -136,7 +138,6 @@ DATABASE_ENGINES = {
         "PORT": env("POSTGRES_DB_PORT"),
     }
 }
-
 
 DATABASES = {
     'default': DATABASE_ENGINES[env('CURRENT_DATABASE_ENGINE')],
@@ -181,16 +182,17 @@ USE_I18N = True
 
 USE_TZ = True
 
-# Email Backend
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend" # add for email verification with django-allauth
-
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 # url to access static files
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / 'static'] # for static files
+
+# crispy
+CRISPY_TEMPLATE_PACK = 'bootstrap5'
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+# CRISPY_TEMPLATE_PACK = 'uni_form'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -201,3 +203,24 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = "user_account.User"
 
 SITE_ID = 1
+
+ACCOUNT_SESSION_REMEMBER = True # allauth setting to remember user session
+ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False # allauth setting to enter password twice during signup
+
+LOGIN_REDIRECT_URL = "home" # contrib.auth setting for redirect after login same as next_page in login view works for django-allauth
+LOGOUT_REDIRECT_URL = "home" # contrib.auth setting for redirect after logout same as next_page in logout view works for django-allauth
+
+# these settings are for django-allauth to use email instead of username
+ACCOUNT_USERNAME_REQUIRED = False # new
+ACCOUNT_LOGIN_METHODS = {'email'}
+# ACCOUNT_AUTHENTICATION_METHOD = "email" # new deprecated
+ACCOUNT_EMAIL_REQUIRED = True # new
+ACCOUNT_UNIQUE_EMAIL = True # new
+
+# Email Backend
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend" # add for email verification with django-allauth
+# DEFAULT_FROM_EMAIL = "admin@djangobookstore.com"
+
+# media uploaded files
+MEDIA_URL = "/media/" # is the URL we can use in our templates for the files
+MEDIA_ROOT = BASE_DIR / "media" # is the absolute file system path to the directory for user-uploaded files
