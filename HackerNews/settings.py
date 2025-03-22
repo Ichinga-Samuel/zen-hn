@@ -29,7 +29,7 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env("DEBUG")
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -131,9 +131,9 @@ DATABASE_ENGINES = {
     "sqlite3": {"ENGINE": "django.db.backends.sqlite3", "NAME": BASE_DIR / env("SQLITE3_DB_NAME")},
     "postgresql":{
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": env("POSTGRES_DB_NAME"),
-        "USER": env("POSTGRES_DB_USER"),
-        "PASSWORD": env("POSTGRES_DB_PASSWORD"),
+        "NAME": env("POSTGRES_DB"),
+        "USER": env("POSTGRES_USER"),
+        "PASSWORD": env("POSTGRES_PASSWORD"),
         "HOST": env("POSTGRES_DB_HOST"),
         "PORT": env("POSTGRES_DB_PORT"),
     }
