@@ -1,0 +1,29 @@
+"name": zen-hn
+
+"services":
+  web:
+    build: .
+    env_file:
+      - .env
+    environment:
+      POSTGRES_DB_HOST: db
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - local_storage:/zen_hn
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    container_name: web
+
+  db:
+    image: postgres
+    env_file:
+      - .env
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    container_name: db
+
+volumes:
+  local_storage:
+  db_data:
